@@ -7,27 +7,27 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-@Document(collection = "assets")
+@Document(collection = "user_profiles")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class Notification  extends AuditCollection<String> {
+public class UserProfile extends AuditCollection<String> {
 
     @Id
     private String id;
-
-    @Field("title")
-    private String title;
-
-    @Field("description")
-    private String description;
-
-    private LocalDateTime date;
-
+    private String full_name;
+    private String gender;
+    private LocalDate dob;
+    private String phone_number;
+    private String address;
+    private String avatar;
+    private Number status;
+    private String position;
+    private String email;
+    private String business_name;
 
 }
