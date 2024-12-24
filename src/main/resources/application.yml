@@ -80,6 +80,8 @@ kafka:
   topic:
     user-register: user-register-event
     user-profile-update: user-update-profile-event
+    enable-user-profile: enable-user-profile-event
+    disable-user-profile: disable-user-profile-event
   consumer:
     group-id: user-profile-service
   bootstrap-servers: 34.121.176.49:9092

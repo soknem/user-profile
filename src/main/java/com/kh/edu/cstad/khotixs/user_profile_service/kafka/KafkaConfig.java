@@ -13,8 +13,15 @@ public class KafkaConfig {
 
     @Value("${kafka.topic.user-register}")
     private String userRegisterTopicName;
+
     @Value("${kafka.topic.user-profile-update}")
     private String userProfileUpdateTopicName;
+
+    @Value("enable-user-profile-event")
+    private String enableUserProfileTopicName;
+
+    @Value("disable-user-profile-event")
+    private String disableUserProfileTopicName;
 
     private final static Integer TOPIC_REPLICATION_FACTOR=3;
     private final static Integer TOPIC_PARTITIONS=3;
@@ -40,6 +47,19 @@ public class KafkaConfig {
                 .build();
     }
 
+    @Bean
+    NewTopic enableUserProfileTopic() {
+        return TopicBuilder.name(enableUserProfileTopicName)
+                .partitions(TOPIC_PARTITIONS)
+                .replicas(TOPIC_REPLICATION_FACTOR)
+                .build();
+    }
 
-
+    @Bean
+    NewTopic disableUserProfileTopic() {
+        return TopicBuilder.name(disableUserProfileTopicName)
+                .partitions(TOPIC_PARTITIONS)
+                .replicas(TOPIC_REPLICATION_FACTOR)
+                .build();
+    }
 }

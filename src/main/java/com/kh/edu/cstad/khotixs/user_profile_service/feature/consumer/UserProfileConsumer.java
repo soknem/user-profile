@@ -2,6 +2,8 @@ package com.kh.edu.cstad.khotixs.user_profile_service.feature.consumer;
 
 import com.kh.edu.cstad.khotixs.user_profile_service.domain.UserProfile;
 import com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile.UserProfileRepository;
+import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.DisableUserProfileEvent;
+import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.EnableUserProfileEvent;
 import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.UserProfileUpdateEvent;
 import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.UserRegisterEvent;
 import com.kh.edu.cstad.khotixs.user_profile_service.mapper.UserProfileMapper;
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @KafkaListener(
-        topics = {"${kafka.topic.user-register}", "${kafka.topic.user-profile-update}"},
+        topics = {"${kafka.topic.user-register}", "${kafka.topic.user-profile-update}", "${kafka.topic.enable-user-profile}", "${kafka.topic.disable-user-profile}"},
         groupId = "${kafka.consumer.group-id}",
         containerFactory = "kafkaListenerContainerFactory"
 )

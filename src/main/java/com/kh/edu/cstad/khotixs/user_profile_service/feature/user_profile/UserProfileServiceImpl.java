@@ -3,6 +3,8 @@ package com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile;
 import com.kh.edu.cstad.khotixs.user_profile_service.domain.UserProfile;
 import com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile.dto.UserProfileResponse;
 import com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile.dto.UserProfileUpdateRequest;
+import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.DisableUserProfileEvent;
+import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.EnableUserProfileEvent;
 import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.UserProfileUpdateEvent;
 import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.UserRegisterEvent;
 import com.kh.edu.cstad.khotixs.user_profile_service.mapper.UserProfileMapper;
@@ -13,10 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -33,6 +33,11 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Value("${kafka.topic.user-register}")
     private String userRegisterTopicName;
+
+    @Value("enable-user-profile-event")
+    private String enableUserProfileTopicName;
+    @Value("disable-user-profile-event")
+    private String disableUserProfileTopicName;
 
     @Override
     public UserProfileResponse getUserByEmail(String email) {
@@ -74,6 +79,14 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         // Save to database
         userProfileRepository.save(userProfile);
+
+        EnableUserProfileEvent enableUserProfileEvent = EnableUserProfileEvent.newBuilder()
+                .setStatus((int) userProfile.getStatus())
+                .setEmail(userProfile.getEmail())
+                .build();
+        log.info("EnableUserProfileEvent: {}", enableUserProfileEvent);
+        kafkaTemplate.send(enableUserProfileTopicName, userProfile.getId(), enableUserProfileEvent);
+
     }
 
     @Override
@@ -89,6 +102,12 @@ public class UserProfileServiceImpl implements UserProfileService {
 
         // Save to database
         userProfileRepository.save(userProfile);
+
+        DisableUserProfileEvent disableUserProfileEvent = DisableUserProfileEvent.newBuilder()
+                .setStatus((Integer) userProfile.getStatus())
+                .setEmail(userProfile.getEmail())
+                .build();
+        kafkaTemplate.send(disableUserProfileTopicName, userProfile.getId(), disableUserProfileEvent);
     }
 
     @Override
@@ -114,21 +133,6 @@ public class UserProfileServiceImpl implements UserProfileService {
                 .setBusinessName(userProfile.getBusinessName())
                 .build();
 
-        UserRegisterEvent userRegisterEvent = UserRegisterEvent.newBuilder()
-                .setId("8934579fds8756")
-                .setFullName(userProfile.getFullName())
-                .setGender(userProfile.getGender())
-                .setDob(String.valueOf(userProfile.getDob()))
-                .setPhoneNumber(userProfile.getPhoneNumber())
-                .setAddress(userProfile.getAddress())
-                .setAvatar(userProfile.getAvatar())
-                .setStatus((Integer) userProfile.getStatus())
-                .setPosition(userProfile.getPosition())
-                .setEmail("seakngim.phal@email.com")
-                .setBusinessName(userProfile.getBusinessName())
-                .build();
-
-        kafkaTemplate.send(userRegisterTopicName, userProfile.getId(), userRegisterEvent);
         kafkaTemplate.send(userProfileUpdateTopicName, userProfile.getId(), userProfileUpdateEvent);
 
         return userProfileMapper.toUserProfileResponse(userProfile);

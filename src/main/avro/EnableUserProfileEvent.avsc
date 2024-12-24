@@ -1,0 +1,9 @@
+{
+  "namespace": "com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain",
+  "type": "record",
+  "name": "EnableUserProfileEvent",
+  "fields": [
+    { "name": "status", "type": ["null", "int"], "default": null },
+    { "name": "email", "type": "string" }
+  ]
+}

@@ -3,7 +3,6 @@ package com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile;
 import com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile.dto.UserProfileResponse;
 import com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile.dto.UserProfileUpdateRequest;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 
 /**
  * This interface use for manage user profile
