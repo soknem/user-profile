@@ -1,77 +1,88 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.3.5'
-	id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'com.github.davidmc24.gradle.plugin.avro' version '1.9.1'
 }
 
 group = 'com.kh.edu.cstad.khotixs'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 repositories {
-	mavenCentral()
-	maven { url 'https://repo.spring.io/milestone' }
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://packages.confluent.io/maven' }
 }
 
 ext {
-	set('springCloudVersion', "2023.0.3")
+    set('springCloudVersion', "2023.0.3")
 }
 
 dependencies {
-	//default
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    //default
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	//discovery
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    //discovery
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
-	//database
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    //database
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
-	//for web
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+    //for web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	//code clarity
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+    //code clarity
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
-	//mapper
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.0.Beta1'
-	implementation 'org.mapstruct:mapstruct:1.6.0.Beta1'
+    //mapper
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.0.Beta1'
+    implementation 'org.mapstruct:mapstruct:1.6.0.Beta1'
 
-	//validation
-	implementation 'org.springframework.boot:spring-boot-starter-validation:3.2.4'
+    //validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation:3.2.4'
 
-	//test api
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
+    //test api
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
 
-	//spring cloud for get config
-	implementation 'org.springframework.cloud:spring-cloud-starter'
-	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    //spring cloud for get config
+    implementation 'org.springframework.cloud:spring-cloud-starter'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
-	//auto refresh config
-	implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
+    //auto refresh config
+    implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
 
-	//monitoring
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    //monitoring
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-	//security with oauth2
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    //security with oauth2
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+    // https://mvnrepository.com/artifact/org.apache.avro/avro
+    implementation 'org.apache.avro:avro:1.12.0'
+
+    // https://mvnrepository.com/artifact/io.confluent/kafka-avro-serializer
+    implementation 'io.confluent:kafka-avro-serializer:7.8.0'
+
+    // https://mvnrepository.com/artifact/io.confluent/kafka-avro-serializer
+    implementation 'io.confluent:kafka-avro-serializer:7.8.0'
 
 }
 
 dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

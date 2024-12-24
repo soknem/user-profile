@@ -1,4 +1,32 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
+  kafka:
+    # General Kafka configurations
+    bootstrap-servers: 34.121.176.49:9092
+
+    # Producer configuration
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      properties:
+        schema.registry.url: http://34.143.160.110:8911
+
+    # Consumer configuration
+    consumer:
+      group-id: security-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      properties:
+        schema.registry.url: http://34.143.160.110:8911
+        schema.registry.request.timeout.ms: 10000
+        schema.registry.connection.timeout.ms: 10000
+        specific-avro-reader: true
+
+    listener:
+      missing-topics-fatal: false
+
   application:
     name: user-profile-service
   profiles:
@@ -12,13 +40,13 @@ spring:
     import: "optional:configserver:"
   cloud:
     config:
-      uri: http://35.193.215.248:8888
+      uri: http://34.121.176.49:8888
       username: user
       password: password
     stream:
       kafka:
         binder:
-          brokers: 35.193.215.248:50008
+          brokers: 34.121.176.49:9092
     bus:
       trace:
         enabled: true
@@ -26,6 +54,8 @@ spring:
         enabled: true
       env:
         enabled: true
+  jackson:
+    date-format: dd/MM/yyyy
 
 management:
   endpoints:
@@ -46,3 +76,11 @@ logging:
         security: DEBUG
         web: DEBUG
 
+kafka:
+  topic:
+    user-register: user-register-event
+    user-profile-update: user-update-profile-event
+  consumer:
+    group-id: user-profile-service
+  bootstrap-servers: 34.121.176.49:9092
+  schema-registry-url: http://34.143.160.110:8911

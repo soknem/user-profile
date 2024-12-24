@@ -5,14 +5,15 @@ import java.time.LocalDate;
 public record UserProfileResponse(
 
         String id,
-        String full_name,
+        String fullName,
         String gender,
         LocalDate dob,
-        String phone_number,
+        String phoneNumber,
         String address,
         String avatar,
         Number status,
         String position,
-        String business_name
+        String email,
+        String businessName
 ) {
 }
