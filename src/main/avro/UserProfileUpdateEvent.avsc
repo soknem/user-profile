@@ -1,5 +1,5 @@
 {
-  "namespace": "com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain",
+  "namespace": "com.kh.edu.cstad.khotixs.core.domain",
   "type": "record",
   "name": "UserProfileUpdateEvent",
   "fields": [
@@ -11,6 +11,7 @@
     { "name": "avatar", "type": ["null", "string"], "default": null },
     { "name": "status", "type": ["null", "int"], "default": null },
     { "name": "position", "type": ["null", "string"], "default": null },
-    { "name": "businessName", "type": ["null", "string"], "default": null }
+    { "name": "businessName", "type": ["null", "string"], "default": null },
+    { "name": "email", "type": ["null", "string"], "default": null }
   ]
 }

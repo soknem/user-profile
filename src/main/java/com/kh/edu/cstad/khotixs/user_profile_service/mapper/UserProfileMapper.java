@@ -1,11 +1,11 @@
 package com.kh.edu.cstad.khotixs.user_profile_service.mapper;
 
+import com.kh.edu.cstad.khotixs.core.domain.DisableUserProfileEvent;
+import com.kh.edu.cstad.khotixs.core.domain.EnableUserProfileEvent;
+import com.kh.edu.cstad.khotixs.core.domain.UserRegisterEvent;
 import com.kh.edu.cstad.khotixs.user_profile_service.domain.UserProfile;
 import com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile.dto.UserProfileResponse;
 import com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile.dto.UserProfileUpdateRequest;
-import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.DisableUserProfileEvent;
-import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.EnableUserProfileEvent;
-import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.UserRegisterEvent;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -21,5 +21,9 @@ public interface UserProfileMapper {
 
     UserProfile fromEnableUserProfileEvent(EnableUserProfileEvent enableUserProfileEvent);
     UserProfile fromDisableUserProfileEvent(DisableUserProfileEvent disableUserProfileEvent);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateUserProfileFromRegisterEvent(@MappingTarget UserProfile userProfile, UserRegisterEvent userRegisterEvent);
+
 
 }

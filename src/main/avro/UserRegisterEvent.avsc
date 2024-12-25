@@ -1,5 +1,5 @@
 {
-  "namespace": "com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain",
+  "namespace": "com.kh.edu.cstad.khotixs.core.domain",
   "type": "record",
   "name": "UserRegisterEvent",
   "fields": [

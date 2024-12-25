@@ -1,12 +1,11 @@
 package com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile;
 
+import com.kh.edu.cstad.khotixs.core.domain.DisableUserProfileEvent;
+import com.kh.edu.cstad.khotixs.core.domain.EnableUserProfileEvent;
+import com.kh.edu.cstad.khotixs.core.domain.UserProfileUpdateEvent;
 import com.kh.edu.cstad.khotixs.user_profile_service.domain.UserProfile;
 import com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile.dto.UserProfileResponse;
 import com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile.dto.UserProfileUpdateRequest;
-import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.DisableUserProfileEvent;
-import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.EnableUserProfileEvent;
-import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.UserProfileUpdateEvent;
-import com.kh.edu.cstad.khotixs.user_profile_service.kafka.domain.UserRegisterEvent;
 import com.kh.edu.cstad.khotixs.user_profile_service.mapper.UserProfileMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -38,6 +38,26 @@ public class UserProfileServiceImpl implements UserProfileService {
     private String enableUserProfileTopicName;
     @Value("disable-user-profile-event")
     private String disableUserProfileTopicName;
+
+    @Override
+    public UserProfileResponse findMe(Authentication authentication) {
+
+        if(authentication==null){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"please login");
+        }
+
+        String username = authentication.getName();
+
+        // Find user from database
+        UserProfile userProfile = userProfileRepository.findByEmail(username)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        String.format("user = %s has not been found", username))
+                );
+
+        return userProfileMapper.toUserProfileResponse(userProfile);
+    }
+
 
     @Override
     public UserProfileResponse getUserByEmail(String email) {
@@ -131,6 +151,7 @@ public class UserProfileServiceImpl implements UserProfileService {
                 .setStatus((Integer) userProfile.getStatus())
                 .setPosition(userProfile.getPosition())
                 .setBusinessName(userProfile.getBusinessName())
+                .setEmail(userProfile.getEmail())
                 .build();
 
         kafkaTemplate.send(userProfileUpdateTopicName, userProfile.getId(), userProfileUpdateEvent);

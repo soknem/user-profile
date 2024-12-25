@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,6 +14,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/user-profiles")
 public class UserProfileController {
     private final UserProfileService userProfileService;
+
+    @GetMapping("/me")
+    public UserProfileResponse getMe(Authentication authentication){
+
+        return userProfileService.findMe(authentication);
+    }
+
 
     @GetMapping("/{email}")
     public UserProfileResponse getUserByEmail(@PathVariable String email){

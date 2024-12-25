@@ -3,6 +3,7 @@ package com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile;
 import com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile.dto.UserProfileResponse;
 import com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile.dto.UserProfileUpdateRequest;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 
 /**
  * This interface use for manage user profile
@@ -11,6 +12,14 @@ import org.springframework.data.domain.Page;
  * @since 2024
  */
 public interface UserProfileService {
+
+    /**
+     * get profile
+     * @param authentication is the spring object that contain information user
+     * @return {@link UserProfileResponse}
+     */
+    UserProfileResponse findMe(Authentication authentication);
+
 
     /**
      * Get User By Email
