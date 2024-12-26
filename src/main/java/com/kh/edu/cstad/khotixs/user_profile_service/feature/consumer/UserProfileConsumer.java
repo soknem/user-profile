@@ -1,6 +1,5 @@
 package com.kh.edu.cstad.khotixs.user_profile_service.feature.consumer;
 
-import com.kh.edu.cstad.khotixs.core.domain.UserProfileUpdateEvent;
 import com.kh.edu.cstad.khotixs.core.domain.UserRegisterEvent;
 import com.kh.edu.cstad.khotixs.user_profile_service.domain.UserProfile;
 import com.kh.edu.cstad.khotixs.user_profile_service.feature.user_profile.UserProfileRepository;
@@ -10,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 
 @RequiredArgsConstructor
