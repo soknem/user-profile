@@ -76,6 +76,14 @@ logging:
         security: DEBUG
         web: DEBUG
 
+# Eureka client configuration for service discovery.
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://34.121.176.49:8761/eureka/  # Eureka server URL for service registration
+    healthcheck:
+      enabled: true  # Enable health check for the Eureka client
+
 kafka:
   topic:
     user-register: user-register-event
