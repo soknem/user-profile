@@ -3,14 +3,14 @@ spring:
     allow-bean-definition-overriding: true
   kafka:
     # General Kafka configurations
-    bootstrap-servers: 34.121.176.49:9092
+    bootstrap-servers: 34.69.50.191:9092
 
     # Producer configuration
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       properties:
-        schema.registry.url: http://34.121.176.49:8998
+        schema.registry.url: http://34.69.50.191:8998
 
     # Consumer configuration
     consumer:
@@ -19,7 +19,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
       properties:
-        schema.registry.url: http://34.121.176.49:8998
+        schema.registry.url: http://34.69.50.191:8998
         schema.registry.request.timeout.ms: 10000
         schema.registry.connection.timeout.ms: 10000
         specific-avro-reader: true
@@ -35,18 +35,18 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://34.121.176.49:9090
+          issuer-uri: http://34.69.50.191:9090
   config:
     import: "optional:configserver:"
   cloud:
     config:
-      uri: http://34.121.176.49:8888
+      uri: http://config-server:8888
       username: user
       password: password
-    stream:
-      kafka:
-        binder:
-          brokers: 34.121.176.49:9092
+#    stream:
+#      kafka:
+#        binder:
+#          brokers: 34.69.50.191:9092
     bus:
       trace:
         enabled: true
@@ -80,7 +80,7 @@ logging:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://34.121.176.49:8761/eureka/
+      defaultZone: http://eureka-server:8761/eureka
 #      defaultZone: http://localhost:8761/eureka
     healthcheck:
       enabled: true  # Enable health check for the Eureka client
@@ -93,5 +93,5 @@ kafka:
     disable-user-profile: disable-user-profile-event
   consumer:
     group-id: user-profile-service
-  bootstrap-servers: 34.121.176.49:9092
-  schema-registry-url: http://34.121.176.49:8998
+  bootstrap-servers: 34.69.50.191:9092
+  schema-registry-url: http://34.69.50.191:8998
