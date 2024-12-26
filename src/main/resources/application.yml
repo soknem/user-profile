@@ -19,7 +19,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
       properties:
-        schema.registry.url: http://34.143.160.110:8998
+        schema.registry.url: http://34.121.176.49:8998
         schema.registry.request.timeout.ms: 10000
         schema.registry.connection.timeout.ms: 10000
         specific-avro-reader: true
