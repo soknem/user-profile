@@ -35,7 +35,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://34.121.176.49:9090
+          issuer-uri: http://localhost:9090
   config:
     import: "optional:configserver:"
   cloud:
@@ -80,7 +80,8 @@ logging:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://34.121.176.49:8761/eureka/  # Eureka server URL for service registration
+#      defaultZone: http://34.121.176.49:8761/eureka/
+      defaultZone: http://localhost:8761/eureka
     healthcheck:
       enabled: true  # Enable health check for the Eureka client
 
