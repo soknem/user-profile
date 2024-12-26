@@ -58,7 +58,7 @@ dependencies {
 
     //swagger
 // exclude swagger annotation and use newer version due conflicts with avro serializer
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0"){
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0"){
         exclude group: "io.swagger.core.v3", module:"swagger-annotations"
     }
 // https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations
