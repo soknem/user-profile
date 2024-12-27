@@ -85,6 +85,7 @@ eureka:
     healthcheck:
       enabled: true  # Enable health check for the Eureka client
 
+
 kafka:
   topic:
     user-register: user-register-event
