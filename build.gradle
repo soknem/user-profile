@@ -68,8 +68,6 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
-    //auto refresh config
-    implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
 
     //monitoring
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -85,6 +83,17 @@ dependencies {
 
     // https://mvnrepository.com/artifact/io.confluent/kafka-avro-serializer
     implementation 'io.confluent:kafka-avro-serializer:7.8.0'
+
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-stream-kafka
+//    implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka:4.2.0'
+
+//    implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+
+    //auto refresh config
+    implementation 'org.springframework.cloud:spring-cloud-starter-bus-kafka'
+
+
+
 
 }
 
