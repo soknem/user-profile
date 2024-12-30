@@ -47,13 +47,13 @@ spring:
       kafka:
         binder:
           brokers: 34.69.50.191:9092
-      bindings:
-        springCloudBusInput:
-          destination: spring-cloud-bus-topic
-          content-type: application/json
-        springCloudBusOutput:
-          destination: spring-cloud-bus-topic
-          content-type: application/json
+#      bindings:
+#        springCloudBusInput:
+#          destination: spring-cloud-bus-topic
+#          content-type: application/json
+#        springCloudBusOutput:
+#          destination: spring-cloud-bus-topic
+#          content-type: application/json
     bus:
       trace:
         enabled: true
