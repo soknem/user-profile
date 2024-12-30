@@ -24,7 +24,6 @@ public class UserProfileConsumer {
     private final UserProfileMapper userProfileMapper;
     private final UserProfileRepository userProfileRepository;
 
-
     @KafkaHandler
     public void handleUserRegisterEvent(UserRegisterEvent userRegisterEvent) {
 
